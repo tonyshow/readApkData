@@ -13,3 +13,5 @@
     复制到 C:\Program Files\Android\android-sdk\tools 下； 
   3.运行CMD，在DOS下进入TOOL文件夹下，运行 
     java -jar AXMLPrinter2.jar AndroidManifest.xml>AndroidManifest.txt
+3、classes.dex
+  https://blog.csdn.net/Nobody_else_/article/details/83996441
