@@ -1,4 +1,4 @@
-# ccc-os
+# 禁止商业，禁止转发：如有使用法律责任概不负责，
 1、Cocos game秘钥查找 
   IDA-》View->Open subviews->strings 
   Strings window
@@ -15,3 +15,6 @@
     java -jar AXMLPrinter2.jar AndroidManifest.xml>AndroidManifest.txt
 3、classes.dex
   https://blog.csdn.net/Nobody_else_/article/details/83996441
+
+使用说明
+node app.js 加要解压的zip文件 （如果不带参数将按照日期默认解压最新的）
