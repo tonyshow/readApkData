@@ -150,15 +150,41 @@ app.zipApk = function(){
                             console.log( "SHA1:"+SHA1 )
                         }
                     } )
-                    let saveInfo=`应用签名:${appSignature}
-SHA1:${SHA1}
-                    `
-                    fs.writeFile(`${newoutCrackPath}/appInfo.txt`, saveInfo, {flag: 'a'}, function (err) {
-                        if(err) {
-                         console.error(err);
-                         } else { 
-                         }
-                     }); 
+                    let saveInfo=`应用签名=${appSignature}\n
+SHA1=${SHA1}\n\n`;
+
+                    exec(`aapt dump badging ${lastNewFileInfo.filePath}`,(error,info)=>{
+                        console.log(error);
+                        if(!!error){
+
+                        }else{
+                            var list =   info.split("\n")
+                            _.each( list,(txt,idx)=>{
+                                if(txt.indexOf("package")>-1){ 
+                                    console.log("txt="+txt); 
+                                    txt= txt.replace(/^\s*|\s*$/g,"&&")
+                                    txt= txt.replace(/ /g,"&&")
+                                    let packageInfoList=txt.split("&&")
+                                    _.each(packageInfoList,(txt)=>{
+                                        if(txt.indexOf("=")>-1){ 
+                                            txt= txt.replace(/ /g,"") 
+                                            saveInfo+=txt+"\n\n";
+                                        }
+                                    } )
+                                }
+                            } ) 
+                        }
+                        
+                        fs.writeFile(`${newoutCrackPath}/appInfo.txt`, saveInfo, {flag: 'a'}, function (err) {
+                            if(err) {
+                             console.error(err);
+                             } else { 
+                             }
+                        }); 
+                    })
+                    
+
+
                     callBack();
                 });
             },
