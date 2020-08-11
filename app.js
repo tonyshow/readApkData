@@ -2,8 +2,7 @@ require("shelljs/global");
 var fs = require("fs");
 var path = require("path");
 var join = path.join
-var _ = require('underscore');
-var readXml = require("./readXml"); 
+var _ = require('underscore'); 
 var async = require("async");
 const { exec } = require("child_process");
 var app = module.exports = {}
@@ -85,7 +84,7 @@ app.zipApk = function(){
             }
             allApkFileList.push( {mtimeMs:stat.mtimeMs,filePath:fApkPath}) 
         }else{
-            console.warn("其他文件:",fApkPath )
+            // console.warn("其他文件:",fApkPath )
         }
     }); 
     console.log("检查当前有多少个apk","" )
@@ -117,7 +116,7 @@ app.zipApk = function(){
                 });
             },(callBack)=>{
                 console.log("解压zip:",zipName);
-                let _unzip=`unzip -ao ${findZipPath}/${zipName}  -d ${zipFileFolde}` 
+                let _unzip=`unzip -aoq ${findZipPath}/${zipName}  -d ${zipFileFolde}` 
                 exec(_unzip,(info,err)=>{ 
                     if(!!err){
                         console.error("解压出错zip:",err);
@@ -175,17 +174,10 @@ SHA1=${SHA1}\n\n`;
                             } ) 
                         }
                         
-                        fs.writeFile(`${newoutCrackPath}/appInfo.txt`, saveInfo, {flag: 'a'}, function (err) {
-                            if(err) {
-                             console.error(err);
-                             } else { 
-                             }
+                        fs.writeFile(`${newoutCrackPath}/appInfo.txt`, saveInfo, {flag: 'a'}, function (err) { 
+                             callBack();
                         }); 
-                    })
-                    
-
-
-                    callBack();
+                    })  
                 });
             },
             (callBack)=>{ 
