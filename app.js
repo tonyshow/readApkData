@@ -179,20 +179,26 @@ SHA1=${SHA1}\n\n`;
                         }); 
                     })  
                 });
-            },
-            (callBack)=>{ 
-                console.log("xml文件:",`${zipFileFolde}`); 
-                app.findAllFile(zipFileFolde,(fPath,fName)=>{ 
-                    if( fPath.indexOf(".xml") >-1){
-                        console.log("fPath:",fPath)
-                        let outCrackXmlFileFullPath = fPath.replace("zipFile","outCrack");
-                        let outCrackXmlFileFullFolder = outCrackXmlFileFullPath.replace(fName,"");
-                        app.mkdirsSync(outCrackXmlFileFullFolder); 
-                        exec(`cd /Users/pengyuewu/Library/Android/sdk/tools && java -jar AXMLPrinter2.jar ${fPath}>${outCrackXmlFileFullPath}`)
-                    }
-                },false)  
-                callBack();
+            },(callBack)=>{
+                console.log("开始:apktool_2.x.x.java")
+                exec(`java -jar /Users/pengyuewu/Library/Android/sdk/tools/apktool_2.4.1.jar d -f ${lastNewFileInfo.filePath} -o ${newoutCrackPath}`,(err)=>{
+                    callBack()
+                });
             }
+            // ,
+            // (callBack)=>{ 
+            //     console.log("xml文件:",`${zipFileFolde}`); 
+            //     app.findAllFile(zipFileFolde,(fPath,fName)=>{ 
+            //         if( fPath.indexOf(".xml") >-1){
+            //             console.log("fPath:",fPath)
+            //             let outCrackXmlFileFullPath = fPath.replace("zipFile","outCrack");
+            //             let outCrackXmlFileFullFolder = outCrackXmlFileFullPath.replace(fName,"");
+            //             app.mkdirsSync(outCrackXmlFileFullFolder); 
+            //             exec(`cd /Users/pengyuewu/Library/Android/sdk/tools && java -jar AXMLPrinter2.jar ${fPath}>${outCrackXmlFileFullPath}`)
+            //         }
+            //     },false)  
+            //     callBack();
+            // }
         ],(err, result)=>{
             console.log("全部完成")
         }) 
